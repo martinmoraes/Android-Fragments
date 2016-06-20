@@ -105,7 +105,7 @@ public class BlankFragment extends Fragment {
 
     @Override
     public void onDetach() {
-        Log.d("MEUAPP","onDetach " + mostra());
+        Log.d("MEUAPP","onDetach: " + mostra());
         super.onDetach();
         mListener = null;
     }
@@ -113,7 +113,16 @@ public class BlankFragment extends Fragment {
 
 
     private String mostra(){
-        return String.format("Sequencial Local: %s - sequencial: %s - Tag: %s ", mSequencialLocal++, mSequencial, getTag());
+        String contexto = null;
+        if(getActivity() != null){
+            contexto = getActivity().toString();
+        }
+
+        return String.format("\t" +
+                "\n- Sequencial Local: %s " +
+                "\n- Sequencial Geral: %s " +
+                "\n- Tag: %s " +
+                "\n- Contexto: %s", mSequencialLocal++, mSequencial, getTag(),contexto);
     }
 
 
