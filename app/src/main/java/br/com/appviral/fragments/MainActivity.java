@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, BlankFragment.OnFragmentInteractionListener {
 
     private int sequencial = 0;
+    private BlankFragment mBlankFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +54,21 @@ public class MainActivity extends AppCompatActivity
 
     private void abreFragments(String tag) {
         // FRAGMENT
+        Log.d("MEUAPP", "Está em abreFragments(): " + tag);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (mBlankFragment != null)
+            ft.hide(mBlankFragment);
         BlankFragment frag = (BlankFragment) getSupportFragmentManager().findFragmentByTag(tag);
         if (frag == null) {
             frag = frag.newInstance(this.toString(), sequencial++);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.rl_fragment_container, frag, tag);
-            ft.commit();
+//            ft.replace(R.id.rl_fragment_container, frag, tag);
+            ft.add(R.id.rl_fragment_container, frag, tag);
+        } else {
+            ft.show(frag);
         }
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
+        mBlankFragment = frag;
     }
 
     @Override

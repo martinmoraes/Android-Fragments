@@ -25,7 +25,7 @@ public class BlankFragment extends Fragment {
     private static final String SEQUENCAL = "sequencial";
 
     private String mContextoEmString;
-    private int mSequencial;
+    private int mSequencialGeral = -1;
 
     private int mSequencialLocal = 0;
 
@@ -42,7 +42,7 @@ public class BlankFragment extends Fragment {
 
     public static BlankFragment newInstance(String contextoEmString, int sequencial ) {
         String log = String.format("No newInstance: Sequencial: %s - Contexto: %s", sequencial, contextoEmString);
-        Log.d("MEUAPP",log);
+        Log.w("MEUAPP",log);
         BlankFragment fragment = new BlankFragment();
         Bundle args = new Bundle();
         args.putString(CONTEXTO_EM_STRING, contextoEmString);
@@ -57,7 +57,7 @@ public class BlankFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mContextoEmString = getArguments().getString(CONTEXTO_EM_STRING);
-            mSequencial = getArguments().getInt(SEQUENCAL);
+            mSequencialGeral = getArguments().getInt(SEQUENCAL);
             Log.d("MEUAPP","onCreate: " + mostra());
         }
     }
@@ -119,10 +119,10 @@ public class BlankFragment extends Fragment {
         }
 
         return String.format("\t" +
-                "\n- Sequencial Local: %s " +
                 "\n- Sequencial Geral: %s " +
+                "\n- Sequencial Local: %s " +
                 "\n- Tag: %s " +
-                "\n- Contexto: %s", mSequencialLocal++, mSequencial, getTag(),contexto);
+                "\n- Contexto: %s", mSequencialGeral, mSequencialLocal++, getTag(),contexto);
     }
 
 
